@@ -21,8 +21,14 @@ services:
   timescaledb:
     image: timescale/timescaledb:latest-pg15
     ports:
-      - "5432:5432"
+      - "5433:5432"
     environment:
       POSTGRES_USER: crypto_user
       POSTGRES_PASSWORD: crypto_password
       POSTGRES_DB: crypto_market
+    volumes:
+      - ./infrastructure/timescaledb/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - timescale_data:/var/lib/postgresql/data
+
+volumes:
+  timescale_data:
