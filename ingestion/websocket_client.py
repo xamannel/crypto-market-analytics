@@ -7,15 +7,15 @@ from aiokafka import AIOKafkaProducer
 from aiokafka.errors import KafkaError
 
 # Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler('websocket_client.log'),  # Write to file
-        logging.StreamHandler()  # Also print to console
-    ]
-)
+
 logger = logging.getLogger(__name__)
+formatter = logging.Formatter("{asctime} - {name} - {levelname} - {message}", "%Y-%m-%d %H:%M:%S")
+logger.setLevel(logging.INFO)  
+file_handler = logging.FileHandler("websocket_client.log", mode='a', encoding='utf-8')
+file_handler.setFormatter(formatter)
+logger.addHandler(file_handler)
+
+
 
 # Configuration
 KAFKA_BOOTSTRAP_SERVERS = 'localhost:9093'
